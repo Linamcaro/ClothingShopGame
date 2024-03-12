@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
 
     private Camera mainCamera;
 
+    private Vector2 mousePosition;
+
     private void Awake()
     {
 
@@ -36,7 +38,9 @@ public class PlayerController : MonoBehaviour
         if (PlayerControls.Instance.MouseClick())
         {
             MoveToPosition();
-       
+            ObjectClicked();
+
+
         }
 
         MovePlayer();
@@ -46,7 +50,7 @@ public class PlayerController : MonoBehaviour
     private void MoveToPosition()
     {
 
-        Vector2 mousePosition = mainCamera.ScreenToWorldPoint(PlayerControls.Instance.MousePosition());
+        mousePosition = mainCamera.ScreenToWorldPoint(PlayerControls.Instance.MousePosition());
 
         // convert world coordinates to tilemaps coordinates. 
         Vector3Int gridposition = map.WorldToCell(mousePosition);
@@ -87,6 +91,27 @@ public class PlayerController : MonoBehaviour
         Vector3 localScale = transform.localScale;
         localScale.x *= -1f;
         transform.localScale = localScale;
+    }
+
+    private void ObjectClicked()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+
+        if (hit.collider != null)
+        {
+            Debug.Log("Hit collider: " + hit.collider.tag);
+
+            IObjectClicked objectClicked = hit.collider.GetComponent<IObjectClicked>();
+
+            if (objectClicked != null)
+            {
+                objectClicked.OnMouseClick();
+
+                Debug.Log("objectClicked: " + objectClicked);
+
+            }
+        }
+
     }
 
 }
