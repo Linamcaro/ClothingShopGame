@@ -9,22 +9,7 @@ public class ObjectInteraction : MonoBehaviour, IObjectClicked
 
     public event EventHandler<ObjectClickedEventArgs> OnObjectInteraction;
 
-    /// <summary>
-    /// Check if the player is near and trigger the event
-    /// </summary>
-    public void OnMouseClick()
-    {
-
-        Debug.Log("NPC on Mouse Click called");
-
-        if (isPlayerNear)
-        {
-            Debug.Log("isPlayerNear: " + isPlayerNear);
-
-            OnObjectInteraction?.Invoke(this, new ObjectClickedEventArgs(gameObject.tag));
-
-        }
-    }
+    private IStoreClient playerInfo;
 
 
 
@@ -32,9 +17,9 @@ public class ObjectInteraction : MonoBehaviour, IObjectClicked
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("OnCollision enter: " + collision.gameObject.tag);
-
+            //Debug.Log("OnCollision enter: " + collision.gameObject.tag);
             isPlayerNear = true;
+            playerInfo = collision.GetComponent<IStoreClient>();
         }
     }
 
@@ -43,8 +28,26 @@ public class ObjectInteraction : MonoBehaviour, IObjectClicked
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("OnCollision exit: " + collision.gameObject.tag);
+            //Debug.Log("OnCollision exit: " + collision.gameObject.tag);
             isPlayerNear = false;
+        }
+    }
+
+
+    /// <summary>
+    /// Check if the player is near and trigger the event
+    /// </summary>
+    public void OnMouseClick()
+    {
+
+        //Debug.Log("NPC on Mouse Click called");
+
+        if (isPlayerNear)
+        {
+            //Debug.Log("isPlayerNear: " + isPlayerNear);
+
+            OnObjectInteraction?.Invoke(this, new ObjectClickedEventArgs(gameObject.tag, playerInfo));
+
         }
     }
 
@@ -55,9 +58,11 @@ public class ObjectInteraction : MonoBehaviour, IObjectClicked
 public class ObjectClickedEventArgs : EventArgs
 {
     public string objectTag;
+    public IStoreClient playerInfo;
 
-    public ObjectClickedEventArgs(string tag)
+    public ObjectClickedEventArgs(string tag, IStoreClient info)
     {
         objectTag = tag;
+        playerInfo = info;
     }
 }

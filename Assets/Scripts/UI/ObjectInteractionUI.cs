@@ -9,6 +9,7 @@ public class ObjectInteractionUI : MonoBehaviour
 
     [SerializeField] GameObject shopKeeperPanel;
     [SerializeField] GameObject clothStorePanel;
+    [SerializeField] private UIShop uiShop;
 
 
     // Start is called before the first frame update
@@ -33,9 +34,12 @@ public class ObjectInteractionUI : MonoBehaviour
             EnableGameObject(shopKeeperPanel);
             
 
-        }else if(args.objectTag == "ClothStand")
+        }
+        
+        else if(args.objectTag == "ClothStand")
         {
             EnableGameObject(clothStorePanel);
+            uiShop.GetClientInfo(args.playerInfo);
         }
     }
 
