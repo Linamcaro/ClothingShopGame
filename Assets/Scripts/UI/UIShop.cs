@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class UIShop : MonoBehaviour
 {
+    [SerializeField] SOCloths shopItemList;
+
     private Transform storePanel;
     private Transform storeTemplate;
 
@@ -15,14 +17,23 @@ public class UIShop : MonoBehaviour
         
         storePanel = transform.Find("StorePanel");
         storeTemplate = storePanel.Find("StoreTemplate");
-        
-        storePanel.gameObject.SetActive(false);
+       
 
     }
 
     private void Start()
     {
-        
+        CreateItemButton();
+    }
+   
+    private void CreateItemButton()
+    {
+
+        for (int item = 0; item < shopItemList.shopItems.Length; item++)
+        {
+            SetItemInformation(shopItemList.shopItems[item].itemSprite, shopItemList.shopItems[item].itemName, shopItemList.shopItems[item].itemPrice, item);
+
+        }
     }
 
 
@@ -33,7 +44,7 @@ public class UIShop : MonoBehaviour
     /// <param name="itemName"></param>
     /// <param name="itemPrice"></param>
     /// <param name="index"></param>
-    private void CreateItemButton(Sprite itemSprite, string itemName, int itemPrice, int index)
+    private void SetItemInformation(Sprite itemSprite, string itemName, int itemPrice, int index)
     {
 
         Transform shopItemTransform = Instantiate(storeTemplate, storePanel);
