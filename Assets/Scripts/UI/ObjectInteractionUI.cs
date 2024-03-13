@@ -14,12 +14,12 @@ public class ObjectInteractionUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ///Suscribe to all the objects that have the ObjectInteraction component attached
+        ObjectInteraction[] eventObjects = FindObjectsOfType<ObjectInteraction>();
 
-        NPC[] npcs = FindObjectsOfType<NPC>();
-
-        foreach (NPC npc in npcs)
+        foreach (ObjectInteraction objectInteraction  in eventObjects)
         {
-            npc.ShopKeeperInteraction += OnObjectInteraction;
+            objectInteraction.OnObjectInteraction += OnObjectInteraction;
         }
 
         DisableGameObject(shopKeeperPanel);

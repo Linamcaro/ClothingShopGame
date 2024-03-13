@@ -60,6 +60,10 @@ public class PlayerControls : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Get the mouse position
+    /// </summary>
+    /// <returns></returns>
     public Vector2 MousePosition()
     {
         Vector2 mousePosition = inputActions.Player.MousePosition.ReadValue<Vector2>();
@@ -67,6 +71,10 @@ public class PlayerControls : MonoBehaviour
         return mousePosition;
     }
 
+    /// <summary>
+    /// Return true or false if the player has pressed the menu button
+    /// </summary>
+    /// <returns></returns>
     public bool PlayerMenu()
     {
         return inputActions.Player.Menu.triggered;

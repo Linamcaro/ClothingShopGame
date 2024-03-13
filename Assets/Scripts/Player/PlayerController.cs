@@ -9,15 +9,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float moveDistance;
 
-    private bool isFacingRight = true;
-
-    public bool isWalking = false;
-
     private Vector3 targetPosition;
-
     private Camera mainCamera;
-
     private Vector2 mousePosition;
+
+
+    private bool isFacingRight = true;
+    public bool isWalking = false;
 
     private void Awake()
     {
@@ -37,7 +35,7 @@ public class PlayerController : MonoBehaviour
     {
         if (PlayerControls.Instance.MouseClick())
         {
-            MoveToPosition();
+            SetNewPosition();
             ObjectClicked();
 
 
@@ -47,7 +45,10 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void MoveToPosition()
+    /// <summary>
+    /// Set the target position
+    /// </summary>
+    private void SetNewPosition()
     {
 
         mousePosition = mainCamera.ScreenToWorldPoint(PlayerControls.Instance.MousePosition());
@@ -64,6 +65,9 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Move the player to the target position
+    /// </summary>
     private void MovePlayer()
     {
         if (Vector3.Distance(transform.position, targetPosition) > moveDistance)
@@ -85,6 +89,9 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Rotate the character's sprite
+    /// </summary>
     private void Flip()
     {
         isFacingRight = !isFacingRight;
@@ -93,6 +100,9 @@ public class PlayerController : MonoBehaviour
         transform.localScale = localScale;
     }
 
+    /// <summary>
+    /// Check which object was clicked and called it's OnMouseClick function
+    /// </summary>
     private void ObjectClicked()
     {
         RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);

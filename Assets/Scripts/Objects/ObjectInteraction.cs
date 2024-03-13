@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPC : MonoBehaviour, IObjectClicked
+public class ObjectInteraction : MonoBehaviour, IObjectClicked
 {
     private bool isPlayerNear = false;
 
-    public event EventHandler<ObjectClickedEventArgs> ShopKeeperInteraction;
+    public event EventHandler<ObjectClickedEventArgs> OnObjectInteraction;
 
     /// <summary>
     /// Check if the player is near and trigger the event
@@ -21,7 +21,7 @@ public class NPC : MonoBehaviour, IObjectClicked
         {
             Debug.Log("isPlayerNear: " + isPlayerNear);
 
-            ShopKeeperInteraction?.Invoke(this, new ObjectClickedEventArgs(gameObject.tag));
+            OnObjectInteraction?.Invoke(this, new ObjectClickedEventArgs(gameObject.tag));
 
         }
     }
@@ -37,6 +37,7 @@ public class NPC : MonoBehaviour, IObjectClicked
             isPlayerNear = true;
         }
     }
+
 
     private void OnTriggerExit2D(Collider2D collision)
     {
