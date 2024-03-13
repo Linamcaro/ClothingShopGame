@@ -31,7 +31,7 @@ public class PlayerControls : MonoBehaviour
         inputActions = new InputActions();
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
         inputActions.Enable();
 
